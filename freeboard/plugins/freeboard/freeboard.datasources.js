@@ -648,6 +648,7 @@ freeboard.loadDatasourcePlugin({
 		// Here we call createRefreshTimer with our current settings, to kick things off, initially. Notice how we make use of one of the user defined settings that we setup earlier.
 	//	createRefreshTimer(currentSettings.refresh_time);
 	}
+	
 
 
 }());

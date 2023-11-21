@@ -9,7 +9,7 @@ http.createServer(function (request, response) {
   var uri = url.parse(request.url).pathname;
   var filename = path.join(process.cwd(), "/freeboard", uri);
 
-  fs.access(filename, fs.constants.F_OK, (err) => {
+fs.access(filename, fs.constants.F_OK, (err) => {
     if (err) {
       response.writeHead(404, { "Content-Type": "text/plain" });
       response.write("404 Not Found\n");
