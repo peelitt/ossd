@@ -11,15 +11,35 @@ html = response.text
 # BeautifulSoup을 사용하여 HTML 파싱
 soup = BeautifulSoup(html, "html.parser")
 
-# 원하는 테이블을 선택
-target_table = soup.find("table", class_="table-col tablesorter tablesorter-blue tablesorterb64d842dc37fe")
+# 원하는 테이블 선택
+target_table = soup.find("table", class_="table-col")
 
-# 특정 행을 선택
-desired_row = target_table.find_all("tr")[42]
+# 테이블의 모든 행(rows)을 가져오기
+rows = target_table.find_all("tr")
 
-# 선택한 행의 모든 셀(cells)을 가져오기
-cells_in_desired_row = desired_row.find_all("td")
+# 원하는 도시 이름과 시정(가시성)을 가져오기
+desired_city = "서울"
 
-# 특정 셀(index 1)의 데이터 출력
-desired_cell_data = cells_in_desired_row[1].text
-print(desired_cell_data)
+for row in rows:
+    # 각 행의 첫 번째 셀에서 도시 이름 가져오기
+    city_cell = row.find("td")
+    
+    # None 체크 추가
+    if city_cell is not None:
+        city_name = city_cell.text.strip()
+
+        # 도시 이름이 원하는 도시와 일치하는 경우
+        if city_name == desired_city:
+            # 행에서 시정(가시성) 가져오기
+            visibility_cell = row.find_all("td")[2]  # 시정(가시성)이 있는 열의 인덱스
+            
+            # None 체크 추가
+            if visibility_cell is not None:
+                visibility = visibility_cell.text.strip()
+
+                # 가져온 데이터 출력
+                print(f"도시: {city_name}, 시정(가시성): {visibility}Km")
+            else:
+                print(f"도시: {desired_city}의 시정(가시성) 정보를 찾을 수 없습니다.")
+            
+            break
