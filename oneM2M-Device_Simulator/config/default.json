@@ -39,24 +39,6 @@
             "icon": ""
         },
         {
-            "stream": "up",
-            "type": "Power",
-            "unit": "Kw",
-            "min": 1000,
-            "max": 2000,
-            "freq": 10,
-            "icon": "images/icon-meter.png"
-        },
-        {
-            "stream": "up",
-            "type": "Presence",
-            "unit": "",
-            "min": 0,
-            "max": 1,
-            "freq": 10,
-            "icon": "images/icon-motion.jpg"
-        },
-        {
             "stream": "down",
             "type": "Lamp",
             "unit": "",

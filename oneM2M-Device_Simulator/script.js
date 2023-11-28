@@ -8,7 +8,7 @@ const rl = readline.createInterface({
 });
 
 // 서버 URL 및 기본 템플릿
-const serverUrl = '<http://localhost:8369>';  // 적절한 서버 URL로 대체
+const serverUrl = '<http://172.21.48.1:7579>';  // 적절한 서버 URL로 대체
 let templates;
 
 // 서버로부터 템플릿 및 디바이스 목록 가져오기
