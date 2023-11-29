@@ -38,13 +38,14 @@
             "freq": 1,
             "icon": ""
         },
+        
         {
-            "stream": "down",
-            "type": "Lamp",
-            "unit": "",
+            "stream": "up",
+            "type": "Visibility",
+            "unit": "Km",
             "min": 0,
             "max": 1,
-            "icon": "images/icon-light.png"
+            "icon": ""
         }
     ]
 }
