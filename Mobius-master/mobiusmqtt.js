@@ -1,8 +1,12 @@
 const axios = require('axios');
 const { v4: uuidv4 } = require('uuid');
 
-const mobiusUrl = 'http://127.21.48.1:7579';
+const mobiusUrl = 'http://192.168.28.1:7579';
 const resourcePath = '/Mobius/speed/DATA';
+
+function generateUniqueId() {
+  return uuidv4();
+}
 
 async function fetchData() {
   try {
@@ -17,17 +21,38 @@ async function fetchData() {
     });
 
     const data = response.data;
-    const conValue = data['m2m:cnt']['con'];
-    return conValue;
+
+    // 전체 데이터를 콘솔에 출력
+    console.log('Fetched raw data from DATA folder:', data);
+
+    // m2m:cnt 데이터 구조 확인을 위해 콘솔에 출력
+    const cnt = data["m2m:cnt"];
+    console.log('Fetched data from DATA folder:', cnt);
+
+    const cin = cnt && cnt['m2m:cin'];
+    console.log('Fetched data from DATA:', cin);
+
+    const conValue = data['m2m:cnt'] && data['m2m:cnt']['m2m:cin'] && data['m2m:cnt']['m2m:cin']['con'];
+
+
+    if (conValue !== undefined) {
+      console.log('Fetched conValue from DATA folder:', conValue);
+
+      // m2m:cin 데이터 구조 확인을 위해 콘솔에 출력
+      const cinData = data['m2m:cnt']['m2m:cin'];
+      console.log('Fetched m2m:cin data from DATA folder:', cinData);
+
+      return conValue;
+    } else {
+      console.log('Error: conValue is undefined');
+      return null;
+    }
   } catch (error) {
     console.error('Error fetching data from Mobius:', error);
     console.log('Request details:', error.request);
   }
 }
 
-function generateUniqueId() {
-  return uuidv4();
-}
 
 
 
@@ -47,5 +72,5 @@ client.on('connect', async () => {
 
       console.log('Data published:', data);
     }
-  }, 5000); // 5초마다 데이터 전송
+  }, 3000); // 5초마다 데이터 전송
 });
