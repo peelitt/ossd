@@ -1,5 +1,5 @@
 {
-    "BROKER_URL": "mqtt.eclipseprojects.io",
+    "BROKER_URL": "localhost",
     "BROKER_PORT": 1883,
     "TOPICS": [
         {
@@ -84,30 +84,45 @@
         },
         {
             "TYPE": "single",
-            "PREFIX": "location",
-            "TIME_INTERVAL": 5,
+            "PREFIX": "speed",
+            "TIME_INTERVAL": 1,
             "DATA": [
                 {
-                    "NAME": "coordinate",
-                    "TYPE": "raw_values",
+                    "NAME": "car-speed",
+                    "TYPE": "raw_values", 
                     "RESTART_ON_END": true,
                     "VALUES": [
-                        {
-                            "lat": -121.883682,
-                            "long": 37.354635
-                        },
-                        {
-                            "lat": -121.883352,
-                            "long": 37.354192
-                        },
-                        {
-                            "lat": -121.884284,
-                            "long": 37.353757
-                        },
-                        {
-                            "lat": -121.885227,
-                            "long": 37.353324
-                        }
+                        0, 5, 14, 20, 27, 38, 49, 55, 67, 66, 59, 54, 62, 70, 58, 60, 65, 60, 70, 62, 61, 60, 52, 53, 68, 64, 51, 33, 19, 3, 0, 8, 14, 25, 33, 50, 63, 71, 78, 86, 96, 90, 106, 92, 100, 91, 106, 102, 106, 92, 105, 104, 102, 108, 97, 80, 66, 64, 58, 59, 44, 38, 30, 22, 32, 32, 25, 24, 17, 25, 19, 30, 12, 27, 13, 12, 20, 21, 29, 29, 24, 14, 32, 14, 21, 15, 28, 17, 19, 31, 33, 36, 44, 52, 63, 55, 63, 63, 55, 60, 65, 57, 59, 62, 56, 49, 42, 40, 36, 23, 16, 9, 3, 3, 1, 2, 4, 9, 15, 22, 29, 20, 16, 1, 0, 0, 0, 4, 17, 24, 35, 33, 32, 33, 27, 22, 11, 5, 2, 0, 0, 3, 5, 5, 7, 2, 3, 6, 6, 5, 3
+                    ]
+                }
+            ]
+        },
+        {
+            "TYPE": "single",
+            "PREFIX": "right-turn",
+            "TIME_INTERVAL": 10,
+            "DATA": [
+                {
+                    "NAME": "bool-right-turn",
+                    "TYPE": "raw_values", 
+                    "RESTART_ON_END": true,
+                    "VALUES": [
+                        1, 0, 1, 1, 1, 0, 0, 1, 0, 1
+                    ]
+                }
+            ]
+       },
+       {
+            "TYPE": "single",
+            "PREFIX": "pedestrian",
+            "TIME_INTERVAL": 10,
+            "DATA": [
+                {
+                    "NAME": "num-pedestrain",
+                    "TYPE": "raw_values", 
+                    "RESTART_ON_END": true,
+                    "VALUES": [
+                        6, 0, 3, 1, 0, 5, 0, 4, 1, 0
                     ]
                 }
             ]
