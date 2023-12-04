@@ -2,7 +2,7 @@ const axios = require('axios');
 const { v4: uuidv4 } = require('uuid');
 
 const mobiusUrl = 'http://192.168.28.1:7579';
-const resourcePath = '/Mobius/speed/DATA';
+const resourcePath = '/Mobius/test/locationContainer';
 
 function generateUniqueId() {
   return uuidv4();
@@ -23,7 +23,7 @@ async function fetchData() {
     const data = response.data;
 
     // 전체 데이터를 콘솔에 출력
-    console.log('Fetched raw data from DATA folder:', data);
+    console.log('Fetched raw data from locatioinContainer folder:', data);
 
     // m2m:cnt 데이터 구조 확인을 위해 콘솔에 출력
     const cnt = data["m2m:cnt"];
