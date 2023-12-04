@@ -1,4 +1,8 @@
+import json
+import threading
+import schedule
 import requests
+import time
 from bs4 import BeautifulSoup
 
 # Constant for the desired city
@@ -24,7 +28,7 @@ def get_visibility():
     for row in rows:
         # 각 행의 첫 번째 셀에서 도시 이름 가져오기
         city_cell = row.find("td")
-        
+
         # None 체크 추가
         if city_cell is not None:
             current_city_name = city_cell.text.strip()
@@ -33,16 +37,65 @@ def get_visibility():
             if current_city_name == DESIRED_CITY:
                 # 행에서 시정(가시성) 가져오기
                 visibility_cell = row.find_all("td")[2]  # 시정(가시성)이 있는 열의 인덱스
-                
+
                 # None 체크 추가
                 if visibility_cell is not None:
-                    visibility = visibility_cell.text.strip()
-                    return f"도시: {current_city_name}, 시정(가시성): {visibility}Km"
+                    visibility = float(visibility_cell.text.strip()[:-2])  # 숫자 부분만 추출
+                    print(visibility)
+                    return visibility
                 else:
-                    return f"도시: {DESIRED_CITY}의 시정(가시성) 정보를 찾을 수 없습니다."
+                    return None
 
-    return f"도시: {DESIRED_CITY}를 찾을 수 없습니다."
+    return None
 
-# 원하는 도시의 가시성 정보를 가져오기
-result = get_visibility()
-print(result)
+def update_visibility_topic():
+    # 기존 설정 파일 로드
+    with open('ossd_git/mqtt-simulator/config/settings.json', 'r') as json_file:
+        existing_config = json.load(json_file)
+    
+    # 새로운 가시성 정보 가져오기
+    visibility_info = get_visibility()
+    
+    if visibility_info is not None:
+        # 토픽 이름이 "visibility"인 토픽 찾기
+        visibility_topic = next((topic for topic in existing_config["TOPICS"] if topic["PREFIX"] == "visibility"), None)
+        
+        if visibility_topic:
+            # 해당 토픽의 DATA의 VALUES에 새로운 가시성 정보 추가
+            values = visibility_topic["DATA"][0]["VALUES"]
+            values.insert(0, visibility_info)
+            
+            # 갱신된 설정을 파일에 저장
+            with open('ossd_git/mqtt-simulator/config/settings.json', 'w') as json_file:
+                json.dump(existing_config, json_file, indent=4)
+            
+            print(f"가시성 정보를 visibility 토픽의 맨 앞에 추가하였습니다: {visibility_info}")
+        else:
+            print("토픽 이름이 'visibility'인 토픽을 찾을 수 없습니다.")
+
+# 주기적으로 visibility 토픽 업데이트
+schedule.every(10).seconds.do(update_visibility_topic)
+
+# background 스레드 시작
+thread = threading.Thread(target=lambda: schedule.run_continuously(10))
+thread.start()
+
+# 메인 스레드는 계속해서 다른 작업을 수행 가능
+while True:
+    print("메인 스레드가 다른 작업 수행 중...")
+    time.sleep(5)  # 메인 스레드가 다른 작업 수행 중임을 확인하기 위해 추가한 sleep
+
+# 주기적으로 실행되는 함수 (주기는 1초)
+def periodic_job():
+    print("주기적으로 실행되는 작업")
+
+# 코드 실행 예시
+if __name__ == "__main__":
+    # 백그라운드에서 주기적으로 실행되는 스레드 생성
+    background_thread = threading.Thread(target=lambda: schedule.run_continuously(1))
+    background_thread.start()
+
+    # 메인 스레드에서 다른 작업 수행
+    while True:
+        print("메인 스레드가 다른 작업을 수행 중입니다.")
+        time.sleep(5)  # 메인 스레드가 다른 작업 수행 중임을 확인하기 위해 추가한 sleep

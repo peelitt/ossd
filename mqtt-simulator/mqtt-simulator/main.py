@@ -1,6 +1,8 @@
 import argparse
 from pathlib import Path
 from simulator import Simulator
+#modified
+import multiprocessing as mp
 
 def default_settings():
     base_folder = Path(__file__).resolve().parent.parent
@@ -19,3 +21,7 @@ args = parser.parse_args()
 
 simulator = Simulator(args.settings_file)
 simulator.run()
+
+#modified
+proc = mp.current_process()
+print(proc.name)
