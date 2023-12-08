@@ -46,10 +46,24 @@ class Topic(ABC):
 
     def run(self):
         self.connect()
+        content = {
+            "to": "Mobius/speed/km",
+            "fr": "SAE1",
+            "op": 1,
+            "ty": 4,
+            "rqi": "rqi123",
+            "rvi": "2",
+            "pc": {
+                "m2m:cin": {
+                    "con": 0
+                }
+            }
+        }
         while self.loop:
-            payload = self.generate_payload()
-            self.old_payload = payload
-            self.client.publish(topic=self.topic_url, payload=json.dumps(payload), qos=self.topic_client_settings.qos, retain=self.topic_client_settings.retain)
+            value = self.generate_payload()
+            self.old_payload = value
+            content["pc"]["m2m:cin"]["con"] = value
+            self.client.publish(topic=self.topic_url, payload=json.dumps(content), qos=self.topic_client_settings.qos, retain=self.topic_client_settings.retain)
             time.sleep(self.topic_client_settings.time_interval)
 
     def on_publish(self, client, userdata, result):
