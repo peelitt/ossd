@@ -70,15 +70,14 @@ class Topic(ABC):
         print(f'[{time.strftime("%H:%M:%S")}] Data published on: {self.topic_url}')
 
     def generate_payload(self):
-        payload = {}
         if self.old_payload == None:
             # generate initial data
             for data in self.topic_data:
-                payload[data['NAME']] = self.generate_initial_value(data)
+                payload = self.generate_initial_value(data)
         else:
             # generate next data
             for data in self.topic_data:
-                payload[data['NAME']] = self.generate_next_value(data, self.old_payload[data['NAME']])
+                payload = self.generate_next_value(data, self.old_payload)
         return payload
 
 
