@@ -4,7 +4,7 @@
     "TOPICS": [
         {
             "TYPE": "single",
-            "PREFIX": "/oneM2M/req/SAE1/Mobius2/speed",
+            "PREFIX": "/oneM2M/req/SAE1/Mobius2/json",
             "TIME_INTERVAL": 1,
             "DATA": [
                 {
@@ -19,7 +19,7 @@
         },
         {
             "TYPE": "single",
-            "PREFIX": "/oneM2M/req/SAE1/Mobius2/right-turn",
+            "PREFIX": "/oneM2M/req/SAE2/Mobius2/json",
             "TIME_INTERVAL": 10,
             "DATA": [
                 {
@@ -34,7 +34,7 @@
        },
        {
             "TYPE": "single",
-            "PREFIX": "/oneM2M/req/SAE1/Mobius2/pedestrian",
+            "PREFIX": "/oneM2M/req/SAE3/Mobius2/json",
             "TIME_INTERVAL": 10,
             "DATA": [
                 {
