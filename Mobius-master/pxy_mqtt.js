@@ -135,7 +135,7 @@ exports.mqtt_watchdog = function() {
             pxymqtt_client.on('connect', function () {
                 req_sub();
                 reg_req_sub();
-                //resp_sub();
+                resp_sub();
                 mqtt_state = 'ready';
                 
                 require('./mobius/ts_agent');
