@@ -43,8 +43,8 @@
 		//store our calculated values in an object
 		var stateObject = {};
 		
-		//array of our values: 0=Green, 2=Amber, 3=Red
-		var stateArray = ["green", "amber", "red"];
+		//array of our values: 0=Green, 1=Red , 2=Amber
+		var stateArray = ["green", "red","amber","red"];
         
 		function updateState() {         
 		
@@ -124,7 +124,7 @@
             },
             {
                 name: "value",
-                display_name: "Value (G=0, A=1, R=2)",
+                display_name: "Value (G=0, R=(1,3), A=2)",
                 type: "calculated"
             },
 			{
