@@ -25,7 +25,7 @@
             "type": "Pedestrian",
             "unit": "",
             "min": 0,
-            "max": 10,
+            "max": 1,
             "freq": 7,
             "icon": "images/pedestrian-crossing.png"
         },
